@@ -26,8 +26,8 @@ public class WarriorM2Ability : Ability {
     {
         if (Input.GetMouseButtonDown(1))
         {
-
             nAnim.animator.SetTrigger("M2Pressed");
+            DisableMovement();
         }
 
     }
@@ -35,5 +35,16 @@ public class WarriorM2Ability : Ability {
     protected override void CreateCollider()
     {
 
+    }
+
+    void DisableMovement()
+    {
+        GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        player.enabled = false;
+        nAnim.animator.SetInteger("LowerState", 1);
+    }
+    public void EnableMovement()
+    {
+        player.enabled = true;
     }
 }
