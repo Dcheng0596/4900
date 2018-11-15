@@ -52,9 +52,9 @@ public class Ability : NetworkBehaviour {
         player.isAttacking = false;
         player.currentSpeed = player.speed;
     }
-    /// ///////////////////////////////////////////
+    //////////////////////////////////////////////
 
-    void GetInput()
+    protected virtual void GetInput()
     {
 
     }

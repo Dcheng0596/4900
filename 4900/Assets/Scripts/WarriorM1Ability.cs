@@ -14,10 +14,6 @@ public class WarriorM1Ability : Ability{
         damage = 5;
         player = GetComponent<Player>();
         nAnim = GetComponentInParent<NetworkAnimator>();
-        nAnim.SetParameterAutoSend(1, true);
-        nAnim.SetParameterAutoSend(2, true);
-        //anim = gameObject.GetComponentInParent<Animator>();
-        nAnim.animator.SetBool("M1Startup", false);
 
     }
 
@@ -97,7 +93,7 @@ public class WarriorM1Ability : Ability{
         nAnim.animator.SetBool("M1Held", false);
     }
 
-    void GetInput()
+    protected override void GetInput()
     {
         if (Input.GetMouseButton(0))
         {
