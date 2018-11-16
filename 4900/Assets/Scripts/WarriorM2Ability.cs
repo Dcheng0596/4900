@@ -20,7 +20,6 @@ public class WarriorM2Ability : Ability {
 	
 	void Update ()
     {
-
         if (!isLocalPlayer)
             return;
         GetInput();
@@ -33,8 +32,7 @@ public class WarriorM2Ability : Ability {
         {
             nAnim.animator.SetBool("M2Pressed", true);
             DisableMovement();
-        }
-        
+        }      
 
     }
 

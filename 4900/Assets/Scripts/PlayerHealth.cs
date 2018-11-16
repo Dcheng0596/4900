@@ -4,7 +4,7 @@ using System.Collections;
 using UnityEngine.Networking;
 
 
-// Handles player health and health slider
+// Handles player health, health slider, and status conditions
 public class PlayerHealth : NetworkBehaviour
 {
     public int startingHealth = 100;
@@ -14,7 +14,7 @@ public class PlayerHealth : NetworkBehaviour
 
     private Rigidbody2D rb2D;
 
-    Animator anim;                                              
+    Animator anim;
                            
     Player player;                                                 
     bool isDead;                                               
@@ -107,7 +107,11 @@ public class PlayerHealth : NetworkBehaviour
     {
         Debug.Log("Stun Started");
         anim.SetInteger("LowerState", 1);
-        this.GetComponent<Player>().enabled = false;
+
+
+        rb2D.velocity = Vector3.zero;
+        player.enabled = false;
+
         yield return new WaitForSeconds(stunTime);
         this.GetComponent<Player>().enabled = true;
         Debug.Log("Stun Ended");

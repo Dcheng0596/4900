@@ -97,9 +97,13 @@ public class Player : NetworkBehaviour
     void SetLowerState()
     {
         if (Input.GetKey(KeyCode.W))
-        {
             angleThreshold(2, 5, 3, 4);
-        }
+        if (Input.GetKey(KeyCode.A))
+            angleThreshold(4, 2, 5, 3);
+        if (Input.GetKey(KeyCode.S))
+            angleThreshold(3, 4, 2, 5);
+        if (Input.GetKey(KeyCode.D))
+            angleThreshold(5, 3, 4, 2);
     }
 
     // Sets animator paramaters based on the angle the player is facing 
