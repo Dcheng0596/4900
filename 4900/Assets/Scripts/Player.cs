@@ -73,9 +73,9 @@ public class Player : NetworkBehaviour
     void playerMovement()
     {
 
-        Vector2 vel = new Vector2(Mathf.Lerp(0, Input.GetAxisRaw("Horizontal"), .8f), Mathf.Lerp(0, Input.GetAxisRaw("Vertical"), .8f));
-        vel.Normalize();
-        rb2D.velocity = vel * currentSpeed * Time.deltaTime;
+        Vector2 dir = new Vector2(Mathf.Lerp(0, Input.GetAxisRaw("Horizontal"), .8f), Mathf.Lerp(0, Input.GetAxisRaw("Vertical"), .8f));
+        dir.Normalize();
+        rb2D.velocity = dir * currentSpeed * Time.deltaTime;
 
         if (Input.GetKey(KeyCode.W) == false && Input.GetKey(KeyCode.S) == false && Input.GetKey(KeyCode.A) == false && Input.GetKey(KeyCode.D) == false)
         {

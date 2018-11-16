@@ -733,6 +733,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slowDown: 0
   damage: 15
+  stunTime: 10
 --- !u!114 &114093642103923360
 MonoBehaviour:
   m_ObjectHideFlags: 1

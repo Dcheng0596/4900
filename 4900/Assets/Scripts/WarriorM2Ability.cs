@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class WarriorM2Ability : Ability {
 
     BoxCollider2D m2;
+    public float stunTime = 1;
 
     void Start ()
     {

@@ -11,6 +11,8 @@ public class OnDamage : NetworkBehaviour {
     public Font OL;
     public enum Ability { M1, M2, Q, E};
     public Ability ability;
+    Player player;
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -29,23 +31,23 @@ public class OnDamage : NetworkBehaviour {
         if (enemy.transform.tag == "Player" && uIdentity != myIdentity)
         {
             int damage;
+            float stunTime;
             switch(ability)
             {
                 case Ability.M1:
-                     damage = GetComponent<WarriorM1Ability>().damage;
+                    damage = GetComponent<WarriorM1Ability>().damage;
                     damageEvent(uIdentity, damage, colPos);
                     break;
                 case Ability.M2:
-                     damage = GetComponent<WarriorM2Ability>().damage;
+                    damage = GetComponent<WarriorM2Ability>().damage;
+                    stunTime = GetComponent<WarriorM2Ability>().stunTime;
                     damageEvent(uIdentity, damage, colPos);
+                    CmdSendStunCoroutine(uIdentity, stunTime);
                     break;
                 default:
                     Debug.LogError("No Ability Seleceted");
                     break;
             }
-
-    
-
         }
     }
     void damageEvent(string uIdentity, int damage, Vector2 colPos)
@@ -54,14 +56,14 @@ public class OnDamage : NetworkBehaviour {
         CmdSendDamageText(uIdentity, damage, colPos);
     }
     [Command]
-    protected void CmdDealDamage(string uniqueID, int damage)
+     void CmdDealDamage(string uniqueID, int damage)
     {
         GameObject go = GameObject.Find(uniqueID);
         go.GetComponent<PlayerHealth>().TakeDamage(damage);
     }
 
     [Command]
-    protected void CmdSendDamageText(string uniqueID, int damage, Vector3 position)
+     void CmdSendDamageText(string uniqueID, int damage, Vector3 position)
     {
         RpcDamageText(uniqueID, damage, position);
     }
@@ -69,7 +71,7 @@ public class OnDamage : NetworkBehaviour {
     // Creates damage text above damaged player 
     // Text size and color depends on amount of damage
     [ClientRpc]
-    protected void RpcDamageText(string uniqueID, int damage, Vector3 position)
+    void RpcDamageText(string uniqueID, int damage, Vector3 position)
     {
         GameObject go = GameObject.Find(uniqueID);
         GameObject dmgTxt = Instantiate(dText, position, Quaternion.identity);
@@ -94,6 +96,11 @@ public class OnDamage : NetworkBehaviour {
             text.color = new Color(102, 0, 0);
         }
 
-
+    }
+    [Command]
+    void CmdSendStunCoroutine(string uniqueID, float stunTime)
+    {
+        GameObject go = GameObject.Find(uniqueID);
+        go.GetComponent<PlayerHealth>().RpcRecieveStunCoroutine(stunTime);
     }
 }
