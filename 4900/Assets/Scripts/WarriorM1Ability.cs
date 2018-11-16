@@ -11,7 +11,7 @@ public class WarriorM1Ability : Ability{
 
     void Start() {
         slowDown = 10;
-        damage = 5;
+        this.damage = 5;
         player = GetComponent<Player>();
         nAnim = GetComponentInParent<NetworkAnimator>();
 
@@ -29,7 +29,7 @@ public class WarriorM1Ability : Ability{
     {
         if(!isLocalPlayer)
             return;
-
+        Debug.Log("M1");
         GameObject enemy = collision.gameObject;
 
         string uIdentity = enemy.transform.name;
@@ -40,7 +40,7 @@ public class WarriorM1Ability : Ability{
         if (enemy.transform.tag == "Player" && uIdentity != myIdentity)
         {
   
-            CmdDealDamage(uIdentity, damage);
+            this.CmdDealDamage(uIdentity, damage);
 
             ContactPoint2D[] contacts = new ContactPoint2D[1] ;
             collision.GetContacts(contacts);

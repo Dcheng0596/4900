@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 
 // Base class for all abilities
-public class Ability : NetworkBehaviour {
+public abstract class Ability : NetworkBehaviour {
 
     protected Player player;
     public int slowDown;
@@ -25,6 +25,7 @@ public class Ability : NetworkBehaviour {
 	}
 
     // Send damage over network
+    [Command]
     protected void CmdDealDamage(string uniqueID, int damage)
     {
         GameObject go = GameObject.Find(uniqueID);
