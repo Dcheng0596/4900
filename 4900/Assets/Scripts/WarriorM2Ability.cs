@@ -11,9 +11,10 @@ public class WarriorM2Ability : Ability {
 
     void Start ()
     {
+        nAnim = GetComponent<NetworkAnimator>();
+        nAnim.animator.SetBool("M2Pressed", false);
         this.damage = 15;
         player = GetComponent<Player>();
-        nAnim = GetComponentInParent<NetworkAnimator>();
     }
 	
 	void Update ()
@@ -27,43 +28,21 @@ public class WarriorM2Ability : Ability {
 
     protected override void GetInput()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButton(1))
         {
-            nAnim.animator.SetTrigger("M2Pressed");
+            nAnim.animator.SetBool("M2Pressed", true);
             DisableMovement();
         }
+        
 
     }
 
     // Deals damage at collision contact point and creates approriate damage text
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (!isLocalPlayer)
-            return;
-        Debug.Log("M2");
-        GameObject enemy = collision.gameObject;
-
-        string uIdentity = enemy.transform.name;
-        string myIdentity = this.gameObject.transform.name;
-
-        if (enemy == null)
-            return;
-        if (enemy.transform.tag == "Player" && uIdentity != myIdentity)
-        {
-
-            this.CmdDealDamage(uIdentity, damage);
-
-            ContactPoint2D[] contacts = new ContactPoint2D[1];
-            collision.GetContacts(contacts);
-
-            Vector2 colPos = enemy.transform.position;
-            CmdSendDamageText(uIdentity, damage, colPos);
-
-        }
-    }
+    
 
     protected void WarriorM2CreateCollider()
     {
+        GetComponent<OnDamage>().ability = OnDamage.Ability.M2;
         this.CreateCollider();
     }
 
@@ -89,6 +68,7 @@ public class WarriorM2Ability : Ability {
         if (!isLocalPlayer)
             return;
         Destroy(m2);
+        nAnim.animator.SetBool("M2Pressed", false);
     }
 
     void DisableMovement()

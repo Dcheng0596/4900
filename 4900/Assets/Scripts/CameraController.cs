@@ -12,11 +12,8 @@ public class CameraController : MonoBehaviour {
 
     public float smoothSpeed;
 
-    Camera cam;
-
     private void Start()
     {
-        cam = GetComponent<Camera>();
     }
 
     void LateUpdate ()

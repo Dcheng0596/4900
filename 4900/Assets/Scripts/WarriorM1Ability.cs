@@ -13,7 +13,7 @@ public class WarriorM1Ability : Ability{
         slowDown = 10;
         this.damage = 5;
         player = GetComponent<Player>();
-        nAnim = GetComponentInParent<NetworkAnimator>();
+        nAnim = GetComponent<NetworkAnimator>();
 
     }
 
@@ -25,35 +25,12 @@ public class WarriorM1Ability : Ability{
     }
 
     // Deals damage at collision contact point and creates approriate damage text
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(!isLocalPlayer)
-            return;
-        Debug.Log("M1");
-        GameObject enemy = collision.gameObject;
-
-        string uIdentity = enemy.transform.name;
-        string myIdentity = this.gameObject.transform.name;
-
-        if (enemy == null)
-            return;
-        if (enemy.transform.tag == "Player" && uIdentity != myIdentity)
-        {
-  
-            this.CmdDealDamage(uIdentity, damage);
-
-            ContactPoint2D[] contacts = new ContactPoint2D[1] ;
-            collision.GetContacts(contacts);
-
-            Vector2 colPos = enemy.transform.position;
-            CmdSendDamageText(uIdentity, damage, colPos);
-
-        }
-    }
+    
 
     // Wrapper functions for animation events
     protected void WarriorM1CreateCollider()
     {
+        GetComponent<OnDamage>().ability = OnDamage.Ability.M1;
         this.CreateCollider();
     }
 
@@ -100,6 +77,7 @@ public class WarriorM1Ability : Ability{
             player.isAttacking = true;
             
             nAnim.animator.SetBool("M1Held", true);
+
         }
  
 
