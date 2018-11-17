@@ -10,8 +10,10 @@ public abstract class Ability : NetworkBehaviour {
     protected Player player;
     public int slowDown;
     public int damage;
+    public int coolDown;
+    protected bool onCoolDown;
     protected NetworkAnimator nAnim;
-
+  
 
     // Use this for initialization
     void Start () {

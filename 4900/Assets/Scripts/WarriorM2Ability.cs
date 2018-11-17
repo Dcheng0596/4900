@@ -14,7 +14,9 @@ public class WarriorM2Ability : Ability {
     {
         nAnim = GetComponent<NetworkAnimator>();
         nAnim.animator.SetBool("M2Pressed", false);
+        this.coolDown = 5;
         this.damage = 15;
+        this.onCoolDown = false;
         player = GetComponent<Player>();
     }
 	
@@ -28,8 +30,9 @@ public class WarriorM2Ability : Ability {
 
     protected override void GetInput()
     {
-        if (Input.GetMouseButton(1))
+        if (Input.GetMouseButton(1) && !onCoolDown)
         {
+            StartCoroutine("CoolDown");
             nAnim.animator.SetBool("M2Pressed", true);
             DisableMovement();
         }      
@@ -76,8 +79,16 @@ public class WarriorM2Ability : Ability {
         player.enabled = false;
         nAnim.animator.SetInteger("LowerState", 1);
     }
+
     public void EnableMovement()
     {
         player.enabled = true;
+    }
+
+    IEnumerator CoolDown()
+    {
+        onCoolDown = true;
+        yield return new WaitForSeconds(coolDown);
+        onCoolDown = false;
     }
 }
