@@ -105,16 +105,14 @@ public class PlayerHealth : NetworkBehaviour
 
     IEnumerator Stun(float stunTime)
     {
-        Debug.Log("Stun Started");
         anim.SetInteger("LowerState", 1);
-
-
+        anim.SetBool("Stunned", true);
         rb2D.velocity = Vector3.zero;
         player.enabled = false;
 
         yield return new WaitForSeconds(stunTime);
         this.GetComponent<Player>().enabled = true;
-        Debug.Log("Stun Ended");
+        anim.SetBool("Stunned", false);
     }
 
 }

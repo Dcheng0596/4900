@@ -49,6 +49,14 @@ public class OnDamage : NetworkBehaviour {
                     break;
             }
         }
+
+        // Destroy and colliders that could still remain 
+        foreach (Collider c in GetComponents<Collider>())
+        {
+            if (c.isTrigger == true)
+                Destroy(c);
+        }
+
     }
     void damageEvent(string uIdentity, int damage, Vector2 colPos)
     {
