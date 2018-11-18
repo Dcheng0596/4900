@@ -40,9 +40,9 @@ public class OnDamage : NetworkBehaviour {
                     break;
                 case Ability.M2:
                     damage = GetComponent<WarriorM2Ability>().damage;
-                    stunTime = GetComponent<WarriorM2Ability>().stunTime;
                     damageEvent(uIdentity, damage, colPos);
-                    CmdSendStunCoroutine(uIdentity, stunTime);
+                    stunTime = GetComponent<WarriorM2Ability>().stunTime;
+                    CmdSendStunCoroutine(uIdentity, stunTime);              
                     break;
                 default:
                     Debug.LogError("No Ability Seleceted");

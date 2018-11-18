@@ -67,7 +67,6 @@ public class WarriorM1Ability : Ability{
         if(!isLocalPlayer)
             return;
         Destroy(m1);
-        nAnim.animator.SetBool("M1Held", false);
     }
 
     protected override void GetInput()
@@ -79,7 +78,9 @@ public class WarriorM1Ability : Ability{
             nAnim.animator.SetBool("M1Held", true);
 
         }
- 
+        else
+            nAnim.animator.SetBool("M1Held", false);
+
 
 
     }
