@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
-// Warrior classe's Mouse 1 ability
+// Warrior class Mouse 1 ability
 public class WarriorM1Ability : Ability{
 
     PolygonCollider2D m1;

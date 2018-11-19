@@ -4,15 +4,18 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
+// Warrior class Q ability
 public class WarriorQAbility : Ability {
 
+    public GameObject shieldGO;
     public float stunTime = 1.5f;
 
     void Start ()
     {
         nAnim = GetComponent<NetworkAnimator>();
         nAnim.animator.SetBool("QPressed", false);
-        this.coolDown = 8;
+        this.slowDown = 50;
+        this.coolDown = 0;
         this.damage = 20;
         this.onCoolDown = false;
         player = GetComponent<Player>();
@@ -31,23 +34,10 @@ public class WarriorQAbility : Ability {
         {
             StartCoroutine("CoolDown");
             nAnim.animator.SetBool("QPressed", true);
-            DisableMovement();
         }
         else
             nAnim.animator.SetBool("QPressed", false);
 
-    }
-
-    void DisableMovement()
-    {
-        GetComponent<Rigidbody2D>().velocity = Vector3.zero;
-        player.enabled = false;
-        nAnim.animator.SetInteger("LowerState", 1);
-    }
-
-    public void EnableMovement()
-    {
-        player.enabled = true;
     }
 
     IEnumerator CoolDown()
@@ -55,5 +45,31 @@ public class WarriorQAbility : Ability {
         onCoolDown = true;
         yield return new WaitForSeconds(coolDown);
         onCoolDown = false;
+    }
+
+    protected void WarriorQSlowDown()
+    {
+        this.SlowDown();
+    }
+
+    protected void WarriorQUndoSlow()
+    {
+        this.UndoSlow();
+    }
+
+    [Command]
+    void CmdSendShield()
+    {
+        RpcCreateShield();
+    }
+
+    [ClientRpc]
+    void RpcCreateShield()
+    {
+
+        Vector3 position = this.transform.position + (transform.right * .5f);
+        Quaternion rotationAmount = Quaternion.Euler(0, 0, -90);
+        Quaternion rotation = transform.rotation * rotationAmount;
+        GameObject shield = Instantiate(shieldGO, position, rotation);
     }
 }

@@ -40,13 +40,11 @@ public abstract class Ability : NetworkBehaviour {
 
     protected void SlowDown()
     {
-        player.isAttacking = true;
         player.currentSpeed = player.speed - slowDown;
     }
 
     protected void UndoSlow()
     {
-        player.isAttacking = false;
         player.currentSpeed = player.speed;
     }
     //////////////////////////////////////////////

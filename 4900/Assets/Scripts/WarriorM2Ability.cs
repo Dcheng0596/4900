@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
-// Warrior classe's Mouse 2 ability
+// Warrior classs Mouse 2 ability
 public class WarriorM2Ability : Ability {
 
     BoxCollider2D m2;
@@ -14,6 +14,7 @@ public class WarriorM2Ability : Ability {
     {
         nAnim = GetComponent<NetworkAnimator>();
         nAnim.animator.SetBool("M2Pressed", false);
+        this.slowDown = 20;
         this.coolDown = 5;
         this.damage = 15;
         this.onCoolDown = false;
@@ -33,14 +34,22 @@ public class WarriorM2Ability : Ability {
         if (Input.GetMouseButton(1) && !onCoolDown)
         {
             StartCoroutine("CoolDown");
-            nAnim.animator.SetBool("M2Pressed", true);
-            DisableMovement();
+            nAnim.animator.SetBool("M2Pressed", true);          
         }      
 
     }
 
+    protected void WarriorM2SlowDown()
+    {
+        this.SlowDown();
+    }
+
+    protected void WarriorM2UndoSlow()
+    {
+        this.UndoSlow();
+    }
     // Deals damage at collision contact point and creates approriate damage text
-    
+
 
     protected void WarriorM2CreateCollider()
     {
@@ -73,17 +82,6 @@ public class WarriorM2Ability : Ability {
         nAnim.animator.SetBool("M2Pressed", false);
     }
 
-    void DisableMovement()
-    {
-        GetComponent<Rigidbody2D>().velocity = Vector3.zero;
-        player.enabled = false;
-        nAnim.animator.SetInteger("LowerState", 1);
-    }
-
-    public void EnableMovement()
-    {
-        player.enabled = true;
-    }
 
     IEnumerator CoolDown()
     {
