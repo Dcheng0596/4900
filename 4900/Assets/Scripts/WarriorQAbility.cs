@@ -15,7 +15,7 @@ public class WarriorQAbility : Ability {
         nAnim = GetComponent<NetworkAnimator>();
         nAnim.animator.SetBool("QPressed", false);
         this.slowDown = 50;
-        this.coolDown = 0;
+        this.coolDown = 8;
         this.damage = 20;
         this.onCoolDown = false;
         player = GetComponent<Player>();
