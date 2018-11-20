@@ -40,7 +40,6 @@ GameObject:
   - component: {fileID: 114998638190143012}
   - component: {fileID: 114007374391277784}
   - component: {fileID: 95831450338149732}
-  - component: {fileID: 114988380216816764}
   - component: {fileID: 212436614067009362}
   - component: {fileID: 114235479546540222}
   - component: {fileID: 114905118432661046}
@@ -1027,25 +1026,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingHealth: 250
   currentHealth: 250
---- !u!114 &114988380216816764
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1025915892709512}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1590678366, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Animator: {fileID: 95831450338149732}
-  m_ParameterSendBits: 31
-  param0: 'Recv Param: LowerState:1'
-  param1: 'Recv Param: M1Held:False'
-  param2: 'Sent Param: M1Held:False'
-  param3: 
-  param4: 
-  param5: 
 --- !u!114 &114998638190143012
 MonoBehaviour:
   m_ObjectHideFlags: 1

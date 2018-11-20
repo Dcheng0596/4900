@@ -12,7 +12,7 @@ public abstract class Ability : NetworkBehaviour {
     public int damage;
     public int coolDown;
     protected bool onCoolDown;
-    protected NetworkAnimator nAnim;
+    protected Animator anim;
   
 
     // Use this for initialization

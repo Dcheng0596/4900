@@ -12,8 +12,7 @@ public class WarriorM2Ability : Ability {
 
     void Start ()
     {
-        nAnim = GetComponent<NetworkAnimator>();
-        nAnim.animator.SetBool("M2Pressed", false);
+        anim = GetComponent<Animator>();
         this.slowDown = 20;
         this.coolDown = 5;
         this.damage = 15;
@@ -34,7 +33,7 @@ public class WarriorM2Ability : Ability {
         if (Input.GetMouseButton(1) && !onCoolDown)
         {
             StartCoroutine("CoolDown");
-            nAnim.animator.SetBool("M2Pressed", true);          
+            CmdSendAnimationParameter(true);
         }      
 
     }
@@ -79,7 +78,7 @@ public class WarriorM2Ability : Ability {
         if (!isLocalPlayer)
             return;
         Destroy(m2);
-        nAnim.animator.SetBool("M2Pressed", false);
+        CmdSendAnimationParameter(false);
     }
 
 
@@ -88,5 +87,20 @@ public class WarriorM2Ability : Ability {
         onCoolDown = true;
         yield return new WaitForSeconds(coolDown);
         onCoolDown = false;
+    }
+
+    [Command]
+    void CmdSendAnimationParameter(bool state)
+    {
+        RpcRecieveAnimationParameter(state);
+    }
+
+    [ClientRpc]
+    void RpcRecieveAnimationParameter(bool state)
+    {
+        if (state)
+            anim.SetBool("M2Pressed", true);
+        else
+            anim.SetBool("M2Pressed", false);
     }
 }

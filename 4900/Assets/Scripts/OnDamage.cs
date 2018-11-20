@@ -31,7 +31,7 @@ public class OnDamage: NetworkBehaviour {
     // Creates damage text above damaged player 
     // Text size and color depends on amount of damage
     [ClientRpc]
-    void RpcDamageText(string uniqueID, int damage, Vector3 position)
+    public void RpcDamageText(string uniqueID, int damage, Vector3 position)
     {
         GameObject go = GameObject.Find(uniqueID);
         GameObject dmgTxt = Instantiate(dText, position, Quaternion.identity);

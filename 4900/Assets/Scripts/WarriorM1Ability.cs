@@ -13,7 +13,7 @@ public class WarriorM1Ability : Ability{
         slowDown = 10;
         this.damage = 5;
         player = GetComponent<Player>();
-        nAnim = GetComponent<NetworkAnimator>();
+        anim = GetComponent<Animator>();
 
     }
 
@@ -74,15 +74,26 @@ public class WarriorM1Ability : Ability{
         if (Input.GetMouseButton(0))
         {
             player.isAttacking = true;
-            
-            nAnim.animator.SetBool("M1Held", true);
+
+            CmdSendAnimationParameter(true);
 
         }
         else
-            nAnim.animator.SetBool("M1Held", false);
-
-
-
+            CmdSendAnimationParameter(false);
     }
 
+    [Command]
+    void CmdSendAnimationParameter(bool state)
+    {
+        RpcRecieveAnimationParameter(state);
+    }
+
+    [ClientRpc]
+    void RpcRecieveAnimationParameter(bool state)
+    {
+        if(state)
+            anim.SetBool("M1Held", true);
+        else
+            anim.SetBool("M1Held", false);
+    }
 }

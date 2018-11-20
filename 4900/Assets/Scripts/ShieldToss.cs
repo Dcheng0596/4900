@@ -9,39 +9,45 @@ public class ShieldToss : NetworkBehaviour {
 
     Rigidbody2D rb2D;
     OnDamage dEvent;
+    Stun stun;
+    bool apex;
     public int damage;
+    public float stunTime;
     public int speed;
     
 	// Use this for initialization
 	void Start ()
     {
+        apex = false;
         speed = 7;
         rb2D = GetComponent<Rigidbody2D>();
         dEvent = GetComponent<OnDamage>();
-        RpcSendThrow();
+        stun = GetComponent<Stun>();
+        if(isServer)
+            RpcRecieveThrow();
     }
 	
-	// Update is called once per frame
-	void Update ()
-    {
 
-	}
+
     [ClientRpc]
-    void RpcSendThrow()
+    void RpcRecieveThrow()
     {
         StartCoroutine("Throw");
     }
     IEnumerator Throw()
     {
-
-        rb2D.velocity = transform.up * speed;
-        yield return new WaitForSeconds(1);
         
+        rb2D.velocity = transform.up * speed;
+        yield return new WaitForSeconds(.25f);
+        apex = true;
+        yield return new WaitForSeconds(.05f);
         Destroy(this.gameObject);
     }
 
      void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!isServer)
+            return;
         GameObject enemy = collision.gameObject;
         if (enemy == null)
             return;
@@ -53,7 +59,9 @@ public class ShieldToss : NetworkBehaviour {
 
         if (enemy.transform.tag == "Player" && uIdentity != myIdentity)
         {
-            dEvent.DamageEvent(uIdentity, damage, colPos);
+            if (apex)
+                stun.CmdSendStunCoroutine(uIdentity, stunTime);
+            dEvent.RpcDamageText(uIdentity, damage, colPos);
             this.GetComponent<SpriteRenderer>().enabled = false;
             this.GetComponent<CircleCollider2D>().enabled = false;
         }

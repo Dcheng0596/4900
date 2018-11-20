@@ -8,14 +8,13 @@ using UnityEngine.UI;
 public class WarriorQAbility : Ability {
 
     public GameObject shieldGO;
-    public float stunTime = 1.5f;
+    public float stunTime = 2f;
 
     void Start ()
     {
-        nAnim = GetComponent<NetworkAnimator>();
-        nAnim.animator.SetBool("QPressed", false);
+        anim = GetComponent<Animator>();
         this.slowDown = 50;
-        this.coolDown = 8;
+        this.coolDown = 0;
         this.damage = 20;
         this.onCoolDown = false;
         player = GetComponent<Player>();
@@ -33,7 +32,7 @@ public class WarriorQAbility : Ability {
         if (Input.GetKeyDown(KeyCode.Q) && !onCoolDown)
         {
             StartCoroutine("CoolDown");
-            nAnim.animator.SetBool("QPressed", true);
+            CmdSendAnimationParameter(true);
         }
 
     }
@@ -52,23 +51,37 @@ public class WarriorQAbility : Ability {
 
     protected void WarriorQUndoSlow()
     {
-        nAnim.animator.SetBool("QPressed", false);
         this.UndoSlow();
     }
 
-    [Command]
-    void CmdSendShield()
+    void SendShield()
     {
-        if (!isLocalPlayer)
+        CmdSendAnimationParameter(false);
+        if (!isServer)
             return;
         Vector3 position = this.transform.position + (transform.right * .6f);
         Quaternion rotationAmount = Quaternion.Euler(0, 0, -90);
         Quaternion rotation = transform.rotation * rotationAmount;
         GameObject shield = Instantiate(shieldGO, position, rotation);
 
-        NetworkServer.SpawnWithClientAuthority(shield, this.gameObject);
+        NetworkServer.Spawn(shield);
         shield.GetComponent<ShieldToss>().damage = damage;
+        shield.GetComponent<ShieldToss>().stunTime = stunTime;
     }
 
-   
+
+    [Command]
+    void CmdSendAnimationParameter(bool state)
+    {
+        RpcRecieveAnimationParameter(state);
+    }
+
+    [ClientRpc]
+    void RpcRecieveAnimationParameter(bool state)
+    {
+        if (state)
+            anim.SetBool("QPressed", true);
+        else
+            anim.SetBool("QPressed", false);
+    }
 }
