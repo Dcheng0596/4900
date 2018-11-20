@@ -35,8 +35,6 @@ public class WarriorQAbility : Ability {
             StartCoroutine("CoolDown");
             nAnim.animator.SetBool("QPressed", true);
         }
-        else
-            nAnim.animator.SetBool("QPressed", false);
 
     }
 
@@ -54,22 +52,23 @@ public class WarriorQAbility : Ability {
 
     protected void WarriorQUndoSlow()
     {
+        nAnim.animator.SetBool("QPressed", false);
         this.UndoSlow();
     }
 
     [Command]
     void CmdSendShield()
     {
-        RpcCreateShield();
-    }
-
-    [ClientRpc]
-    void RpcCreateShield()
-    {
-
-        Vector3 position = this.transform.position + (transform.right * .5f);
+        if (!isLocalPlayer)
+            return;
+        Vector3 position = this.transform.position + (transform.right * .6f);
         Quaternion rotationAmount = Quaternion.Euler(0, 0, -90);
         Quaternion rotation = transform.rotation * rotationAmount;
         GameObject shield = Instantiate(shieldGO, position, rotation);
+
+        NetworkServer.SpawnWithClientAuthority(shield, this.gameObject);
+        shield.GetComponent<ShieldToss>().damage = damage;
     }
+
+   
 }

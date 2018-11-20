@@ -53,7 +53,7 @@ public class WarriorM2Ability : Ability {
 
     protected void WarriorM2CreateCollider()
     {
-        GetComponent<OnDamage>().ability = OnDamage.Ability.M2;
+        GetComponent<OnTrigger>().ability = OnTrigger.Ability.M2;
         this.CreateCollider();
     }
 

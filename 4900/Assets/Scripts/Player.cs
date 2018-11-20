@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 public class Player : NetworkBehaviour
 {
     Animator animator;
-
+    public AudioClip background;
     private Rigidbody2D rb2D;
 
     public int speed;

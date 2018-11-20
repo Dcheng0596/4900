@@ -30,7 +30,7 @@ public class WarriorM1Ability : Ability{
     // Wrapper functions for animation events
     protected void WarriorM1CreateCollider()
     {
-        GetComponent<OnDamage>().ability = OnDamage.Ability.M1;
+        GetComponent<OnTrigger>().ability = OnTrigger.Ability.M1;
         this.CreateCollider();
     }
 

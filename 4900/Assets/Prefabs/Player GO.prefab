@@ -50,6 +50,8 @@ GameObject:
   - component: {fileID: 114044189186632326}
   - component: {fileID: 114733991333990630}
   - component: {fileID: 114707612173807266}
+  - component: {fileID: 114617081145385356}
+  - component: {fileID: 114439193411231112}
   m_Layer: 8
   m_Name: Player GO
   m_TagString: Player
@@ -834,6 +836,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf779bb154bd05f41822d2e8bab5a408, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  background: {fileID: 0}
   speed: 75
   currentSpeed: 75
   smoothSpeed: 0.2
@@ -876,8 +879,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c6b0c6d255f766448e63bfd2e4b78de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dText: {fileID: 1794412551293158, guid: 2ab2caf196e203348b911ed1b1ff80d7, type: 2}
-  OL: {fileID: 12800000, guid: bb2dffc07ad704a28aa9186221cc902e, type: 2}
   ability: 0
 --- !u!114 &114286543446131564
 MonoBehaviour:
@@ -927,6 +928,19 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Slider+SliderEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114439193411231112
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1025915892709512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4306e65d3a363c74c9d2330091892c3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dText: {fileID: 1794412551293158, guid: 2ab2caf196e203348b911ed1b1ff80d7, type: 2}
+  OL: {fileID: 12800000, guid: bb2dffc07ad704a28aa9186221cc902e, type: 2}
 --- !u!114 &114537181254317744
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -959,6 +973,17 @@ MonoBehaviour:
     i15: 34
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 1
+--- !u!114 &114617081145385356
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1025915892709512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b2c4f2cdf2efb94091bfcc9a9cd4a16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114707612173807266
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1014,7 +1039,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Animator: {fileID: 95831450338149732}
-  m_ParameterSendBits: 7
+  m_ParameterSendBits: 31
   param0: 'Recv Param: LowerState:1'
   param1: 'Recv Param: M1Held:False'
   param2: 'Sent Param: M1Held:False'

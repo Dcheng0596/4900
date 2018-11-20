@@ -96,23 +96,6 @@ public class PlayerHealth : NetworkBehaviour
         healthSlider.transform.rotation = Quaternion.identity;
     }
     
-    [ClientRpc]
-    public void RpcRecieveStunCoroutine(float stunTime)
-    {
-
-        StartCoroutine("Stun", stunTime);
-    }
-
-    IEnumerator Stun(float stunTime)
-    {
-        anim.SetInteger("LowerState", 1);
-        anim.SetBool("Stunned", true);
-        rb2D.velocity = Vector3.zero;
-        player.enabled = false;
-
-        yield return new WaitForSeconds(stunTime);
-        this.GetComponent<Player>().enabled = true;
-        anim.SetBool("Stunned", false);
-    }
+   
 
 }
