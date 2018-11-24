@@ -7,11 +7,10 @@ using UnityEngine.UI;
 // Applies the correct effects correspodning to the trigger
 public class OnTrigger : NetworkBehaviour {
 
-    public enum Ability { M1, M2, Q, E};
+    public enum Ability { M1, M2, Q, Space};
     public Ability ability;
     Stun stun;
     OnDamage dEvent;
-
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -44,20 +43,14 @@ public class OnTrigger : NetworkBehaviour {
                     stun = GetComponent<Stun>();
                     stun.CmdSendStunCoroutine(uIdentity, stunTime);              
                     break;
+                case Ability.Space:
+                    damage = GetComponent<WarriorSpaceAbility>().damage;
+                    dEvent.DamageEvent(uIdentity, damage, colPos);
+                    break;
                 default:
                     Debug.LogError("No Ability Seleceted");
                     break;
             }
         }
-
-        // Destroy and colliders that could still remain 
-        foreach (Collider c in GetComponents<Collider>())
-        {
-            if (c.isTrigger == true)
-                Destroy(c);
-        }
-
-    }
-    
-    
+    }   
 }

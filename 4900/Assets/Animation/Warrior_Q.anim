@@ -20,11 +20,11 @@ AnimationClip:
   - curve:
     - time: 0
       value: {fileID: 21300002, guid: b627fc2e76e4f794e9a7460a797421ba, type: 3}
-    - time: 0.16666667
+    - time: 0.2
       value: {fileID: 21300004, guid: b627fc2e76e4f794e9a7460a797421ba, type: 3}
-    - time: 0.36666667
+    - time: 0.4
       value: {fileID: 21300006, guid: b627fc2e76e4f794e9a7460a797421ba, type: 3}
-    - time: 0.56666666
+    - time: 0.6
       value: {fileID: 21300008, guid: b627fc2e76e4f794e9a7460a797421ba, type: 3}
     - time: 0.76666665
       value: {fileID: 21300010, guid: b627fc2e76e4f794e9a7460a797421ba, type: 3}
@@ -88,7 +88,14 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.36666667
+  - time: 0.05
+    functionName: ClearColliders
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.4
     functionName: SendShield
     data: 
     objectReferenceParameter: {fileID: 0}

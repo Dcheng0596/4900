@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 // Handles player movement and rotation
 public class Player : NetworkBehaviour
 {
-    Animator animator;
+    Animator anim;
     public AudioClip background;
     private Rigidbody2D rb2D;
 
@@ -22,8 +22,8 @@ public class Player : NetworkBehaviour
         isAttacking = false;
         currentSpeed = speed;
 
-        animator = gameObject.GetComponent<Animator>();
-        animator.SetInteger("LowerState", 1);
+        anim = gameObject.GetComponent<Animator>();
+
 
         rb2D = GetComponent<Rigidbody2D>();
 
@@ -79,7 +79,7 @@ public class Player : NetworkBehaviour
 
         if (Input.GetKey(KeyCode.W) == false && Input.GetKey(KeyCode.S) == false && Input.GetKey(KeyCode.A) == false && Input.GetKey(KeyCode.D) == false)
         {
-            animator.SetInteger("LowerState", 1);
+            CmdSendAnimationParameter(1);
         }
     }
 
@@ -110,14 +110,36 @@ public class Player : NetworkBehaviour
     void angleThreshold(int a, int b, int c, int d)
     {
         if (this.transform.rotation.eulerAngles.z >= 40 && this.transform.rotation.eulerAngles.z <= 140)
-            animator.SetInteger("LowerState", a);
+            CmdSendAnimationParameter(a);
         else if (this.transform.rotation.eulerAngles.z > 140 && this.transform.rotation.eulerAngles.z < 220)
-            animator.SetInteger("LowerState", b);
+            CmdSendAnimationParameter(b);
         else if (this.transform.rotation.eulerAngles.z >= 220 && this.transform.rotation.eulerAngles.z <= 320)
-            animator.SetInteger("LowerState", c);
+            CmdSendAnimationParameter(c);
         else if (this.transform.rotation.eulerAngles.z > 320 && this.transform.rotation.eulerAngles.z <= 360 ||
             this.transform.rotation.eulerAngles.z >= 0 && this.transform.rotation.eulerAngles.z < 40)
-            animator.SetInteger("LowerState", d);
+            CmdSendAnimationParameter(d);
+    }
+
+    [Command]
+    public void CmdSendAnimationParameter(int state)
+    {
+        RpcRecieveAnimationParameter(state);
+    }
+
+    [ClientRpc]
+    void RpcRecieveAnimationParameter(int state)
+    {
+        if (state == 1)
+            anim.SetInteger("LowerState", 1);
+        else if (state == 2)
+            anim.SetInteger("LowerState", 2);
+        else if (state == 3)
+            anim.SetInteger("LowerState", 3);
+        else if (state == 4)
+            anim.SetInteger("LowerState", 4);
+        else 
+            anim.SetInteger("LowerState", 5);
+
     }
 }
 

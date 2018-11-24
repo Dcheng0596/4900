@@ -30,7 +30,7 @@ public class Fade : MonoBehaviour {
         if (isWaiting)
         {
             isWaiting = false;
-            Debug.Log(isWaiting);
+
             yield return new WaitForSeconds(waitTime);          
         }
 
