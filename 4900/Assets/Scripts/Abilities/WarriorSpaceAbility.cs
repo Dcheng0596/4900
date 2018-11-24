@@ -16,7 +16,7 @@ public class WarriorSpaceAbility : Ability
     {
         anim = GetComponent<Animator>();
         this.coolDown = 6;
-        this.damage = 17;
+        this.damage = 18;
         this.onCoolDown = false;
         forwardSpeed = 2.5f;
         player = GetComponent<Player>();
@@ -45,13 +45,13 @@ public class WarriorSpaceAbility : Ability
     {
         player.CmdSendAnimationParameter(1);
         rb2D.velocity = Vector3.zero;
-        player.enabled = false;
+        player.canMove = false;
         StartCoroutine("MoveForward");
     }
 
     protected void WarriorSpaceEnableMovement()
     {
-        player.enabled = true;
+        player.canMove = true;
     }
     // Deals damage at collision contact point and creates approriate damage text
 

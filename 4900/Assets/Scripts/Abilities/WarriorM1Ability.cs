@@ -73,10 +73,7 @@ public class WarriorM1Ability : Ability{
     {
         if (Input.GetMouseButton(0))
         {
-            player.isAttacking = true;
-
             CmdSendAnimationParameter(true);
-
         }
         else
             CmdSendAnimationParameter(false);

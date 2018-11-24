@@ -92,7 +92,7 @@ public class PlayerHealth : NetworkBehaviour
 
     void SetHealthSliderPosition()
     {
-        healthSlider.transform.position = this.transform.position + new Vector3(0, 0.55f, 0);
+        healthSlider.transform.position = this.transform.position + new Vector3(0, 0.65f, 0);
         healthSlider.transform.rotation = Quaternion.identity;
     }
     

@@ -15,11 +15,11 @@ public class Player : NetworkBehaviour
 
     public float smoothSpeed;
 
-    public bool isAttacking;
+    public bool canMove;
 
     void Start()
     {
-        isAttacking = false;
+        canMove = true;
         currentSpeed = speed;
 
         anim = gameObject.GetComponent<Animator>();
@@ -34,6 +34,8 @@ public class Player : NetworkBehaviour
     void FixedUpdate()
     {
         if (!isLocalPlayer)
+            return;
+        if (!canMove)
             return;
         playerMovement();
 

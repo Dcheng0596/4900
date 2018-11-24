@@ -4,6 +4,7 @@ TextureImporter:
   fileIDToRecycleName:
     21300000: HealthBar_0
     21300002: HealthBar_1
+    21300004: HealthBar_2
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -94,13 +95,13 @@ TextureImporter:
         width: 57
         height: 10
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5c027291064a95e46bec3b2c053a424b
+      spriteID: 7ca3c4dd3c8ba684f9f6a88948537c99
       vertices: []
       indices: 
       edges: []
@@ -109,18 +110,38 @@ TextureImporter:
       name: HealthBar_1
       rect:
         serializedVersion: 2
-        x: 21
-        y: 44
+        x: 117
+        y: 140
         width: 54
         height: 7
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ce15f88785ca79747bdce0f2dfeccba1
+      spriteID: 9faaa2a1d4197c24f9e9c942f56bd2b4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HealthBar_2
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 43
+        width: 59
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 356b4267015653c449ded3c2d4f544d4
       vertices: []
       indices: 
       edges: []
