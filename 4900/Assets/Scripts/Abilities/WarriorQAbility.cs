@@ -16,8 +16,8 @@ public class WarriorQAbility : Ability {
     {
         anim = GetComponent<Animator>();
         this.slowDown = 50;
-        this.coolDown = 8;
-        this.damage = 20;
+        this.coolDown = 4;
+        this.damage = 12;
         this.onCoolDown = false;
         player = GetComponent<Player>();
     }

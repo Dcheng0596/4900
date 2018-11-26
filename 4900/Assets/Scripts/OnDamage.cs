@@ -33,7 +33,7 @@ public class OnDamage: NetworkBehaviour {
     [ClientRpc]
     public void RpcDamageText(string uniqueID, int damage, Vector3 position)
     {
-        GameObject go = GameObject.Find(uniqueID);
+       // GameObject go = GameObject.Find(uniqueID);
         GameObject dmgTxt = Instantiate(dText, position, Quaternion.identity);
         dmgTxt.transform.position = position + new Vector3(0, .01f, 0);
 
@@ -43,15 +43,15 @@ public class OnDamage: NetworkBehaviour {
         RectTransform rect = dmgTxt.transform.GetChild(0).gameObject.GetComponentInChildren<RectTransform>();
 
         if (damage < 10)
-            rect.localScale = new Vector3(.04f, .04f, 0);
+            rect.localScale = new Vector3(.035f, .035f, 0);
         else if (damage < 20)
         {
             text.font = OL;
-            rect.localScale = new Vector3(.045f, .045f, 0);
+            rect.localScale = new Vector3(.035f, .035f, 0);
         }
         else
         {
-            rect.localScale = new Vector3(.05f, .05f, 0);
+            rect.localScale = new Vector3(.037f, .038f, 0);
             text.font = OL;
             text.color = new Color(102, 0, 0);
         }

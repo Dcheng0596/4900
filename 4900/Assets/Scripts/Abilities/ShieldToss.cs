@@ -11,38 +11,54 @@ public class ShieldToss : NetworkBehaviour {
     OnDamage dEvent;
     Stun stun;
     bool apex;
+    bool hit;
     public int damage;
     public float stunTime;
     public int speed;
     public string owner;
 
+
     // Use this for initialization
     void Start ()
     {
         apex = false;
-        speed = 6;
+        hit = false;
+        speed = 8;
         rb2D = GetComponent<Rigidbody2D>();
         dEvent = GetComponent<OnDamage>();
         stun = GetComponent<Stun>();
         if(isServer)
             RpcRecieveThrow();
     }
-	
 
+    void LateUpdate()
+    {
+        if (hit)
+            CmdDestroyShield();
+    }
 
     [ClientRpc]
     void RpcRecieveThrow()
     {
         StartCoroutine("Throw");
     }
+
+    [Command]
+    void CmdDestroyShield()
+    {
+        NetworkServer.Destroy(this.gameObject);
+    }
+
     IEnumerator Throw()
     {
         
         rb2D.velocity = transform.up * speed;
-        yield return new WaitForSeconds(.25f);
+        yield return new WaitForSeconds(.2f);
         apex = true;
         yield return new WaitForSeconds(.03f);
-        Destroy(this.gameObject);
+        apex = false;
+        yield return new WaitForSeconds(.20f);
+        CmdDestroyShield();
     }
 
      void OnTriggerEnter2D(Collider2D collision)
@@ -64,8 +80,7 @@ public class ShieldToss : NetworkBehaviour {
             GameObject go = GameObject.Find(uIdentity);
             go.GetComponent<PlayerHealth>().TakeDamage(damage);
             dEvent.RpcDamageText(uIdentity, damage, colPos);
-            this.GetComponent<SpriteRenderer>().enabled = false;
-            this.GetComponent<CircleCollider2D>().enabled = false;
+            hit = true;
         }
     }
 }

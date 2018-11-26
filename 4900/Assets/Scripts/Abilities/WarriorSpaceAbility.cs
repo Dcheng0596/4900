@@ -15,10 +15,10 @@ public class WarriorSpaceAbility : Ability
     void Start()
     {
         anim = GetComponent<Animator>();
-        this.coolDown = 6;
-        this.damage = 18;
+        this.coolDown = 8;
+        this.damage = 21;
         this.onCoolDown = false;
-        forwardSpeed = 2.5f;
+        forwardSpeed = 3.3f;
         player = GetComponent<Player>();
         rb2D = player.GetComponent<Rigidbody2D>();
     }
@@ -72,7 +72,7 @@ public class WarriorSpaceAbility : Ability
 
         Debug.Log("Entered");
         Rigidbody2D rb2D = player.GetComponent<Rigidbody2D>();
-        yield return new WaitForSeconds(.12f);
+        yield return new WaitForSeconds(.15f);
         rb2D.velocity = transform.right * forwardSpeed;
         yield return new WaitForSeconds(.52f);
         rb2D.velocity = Vector3.zero;

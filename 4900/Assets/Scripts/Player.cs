@@ -82,7 +82,16 @@ public class Player : NetworkBehaviour
         if (Input.GetKey(KeyCode.W) == false && Input.GetKey(KeyCode.S) == false && Input.GetKey(KeyCode.A) == false && Input.GetKey(KeyCode.D) == false)
         {
             CmdSendAnimationParameter(1);
+            CmdSendIdleAnimationParameter(1.0f);
+            Debug.Log("Se11nt");
         }
+        else
+        {
+
+            CmdSendIdleAnimationParameter(1.3f);
+            Debug.Log("Sent");
+        }
+
     }
 
     // Sets the players rotation based on the mouse's position
@@ -141,7 +150,17 @@ public class Player : NetworkBehaviour
             anim.SetInteger("LowerState", 4);
         else 
             anim.SetInteger("LowerState", 5);
+    }
+    [Command]
+    public void CmdSendIdleAnimationParameter(float speed)
+    {
+        RpcRecieveIdleAnimationParameter(speed);
+    }
 
+    [ClientRpc]
+    void RpcRecieveIdleAnimationParameter(float speed)
+    {
+        anim.SetFloat("IdleSpeed", speed);
     }
 }
 

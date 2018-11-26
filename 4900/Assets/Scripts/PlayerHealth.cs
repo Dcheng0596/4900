@@ -8,17 +8,17 @@ using UnityEngine.Networking;
 public class PlayerHealth : NetworkBehaviour
 {
     public int startingHealth = 100;
-    [SyncVar]                         
-    public int currentHealth;                                   
-    private Slider healthSlider;                              
+    [SyncVar]
+    public int currentHealth;
+    private Slider healthSlider;
 
     private Rigidbody2D rb2D;
 
     Animator anim;
-                           
-    Player player;                                                 
-    bool isDead;                                               
-    bool isDamaged;                                             
+
+    Player player;
+    bool isDead;
+    bool isDamaged;
 
 
     void Start()
@@ -27,7 +27,7 @@ public class PlayerHealth : NetworkBehaviour
         player = GetComponent<Player>();
         healthSlider = GetComponentInChildren<Slider>();
         rb2D = GetComponent<Rigidbody2D>();
-    
+
         currentHealth = startingHealth;
         healthSlider.value = startingHealth;
 
@@ -45,7 +45,7 @@ public class PlayerHealth : NetworkBehaviour
 
         if (!isLocalPlayer)
             return;
-        CmdSendSlider(currentHealth);    
+        CmdSendSlider(currentHealth);
 
         if (currentHealth <= 0)
         {
@@ -56,17 +56,14 @@ public class PlayerHealth : NetworkBehaviour
     }
 
     public void TakeDamage(int amount)
-    {     
+    {
         isDamaged = true;
- 
+
         if (!isServer)
             return;
         currentHealth -= amount;
         healthSlider.value = currentHealth;
-     
-       
-        if (currentHealth <= 0 && !isDead)
-          Death();
+
     }
 
     [ClientRpc]
@@ -81,21 +78,47 @@ public class PlayerHealth : NetworkBehaviour
         RpcSetSlider(health);
     }
 
+    [Command]
+    void CmdDisableCollider()
+    {
+        RpcDisableCollider();
+    }
+    [ClientRpc]
+    void RpcDisableCollider()
+    {
+        CircleCollider2D collider = GetComponent<CircleCollider2D>();
+        Destroy(collider);
+    }
     void Death()
     {
         isDead = true;
 
+        CmdDisableCollider();
         player.enabled = false;
-        rb2D.bodyType = RigidbodyType2D.Static;
-        GetComponent<Animator>().enabled = false;
+        CmdSendDeathAnimationParameter(true);
+        //Disable Lower layer 
+        anim.SetLayerWeight(anim.GetLayerIndex("Lower"), 0);
     }
 
     void SetHealthSliderPosition()
     {
-        healthSlider.transform.position = this.transform.position + new Vector3(0, 0.65f, 0);
+        healthSlider.transform.position = transform.position + new Vector3(0, 0.65f, 0);
         healthSlider.transform.rotation = Quaternion.identity;
     }
-    
-   
+
+    [Command]
+    void CmdSendDeathAnimationParameter(bool state)
+    {
+        RpcRecieveDeathAnimationParameter(state);
+    }
+
+    [ClientRpc]
+    void RpcRecieveDeathAnimationParameter(bool state)
+    {
+        if (state)
+            anim.SetBool("Dead", true);
+        else
+            anim.SetBool("Death", false);
+    }
 
 }
