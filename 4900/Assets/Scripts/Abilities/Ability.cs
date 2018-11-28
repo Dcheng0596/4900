@@ -13,6 +13,7 @@ public abstract class Ability : NetworkBehaviour {
     public int coolDown;
     protected bool onCoolDown;
     protected Animator anim;
+    protected AudioSync audio;
   
 
     // Use this for initialization

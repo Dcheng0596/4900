@@ -18,6 +18,7 @@ public class WarriorM2Ability : Ability {
         this.damage = 15;
         this.onCoolDown = false;
         player = GetComponent<Player>();
+        audio = GetComponent<AudioSync>();
     }
 	
 	void Update ()
@@ -27,15 +28,14 @@ public class WarriorM2Ability : Ability {
         GetInput();
     }
 
-
     protected override void GetInput()
     {
-        if (Input.GetMouseButton(1) && !onCoolDown)
+        if (Input.GetMouseButton(1) && !onCoolDown && !player.isStun && !player.usingAbility)
         {
             StartCoroutine("CoolDown");
-            CmdSendAnimationParameter(true);         
+            CmdSendAnimationParameter(true);
+            player.usingAbility = true;
         }      
-
     }
 
     protected void WarriorM2SlowDown()
@@ -46,6 +46,7 @@ public class WarriorM2Ability : Ability {
     protected void WarriorM2UndoSlow()
     {
         this.UndoSlow();
+        player.usingAbility = false;
     }
     // Deals damage at collision contact point and creates approriate damage text
 
@@ -65,7 +66,7 @@ public class WarriorM2Ability : Ability {
     {
         if (!isLocalPlayer)
             return;
-
+        audio.PlaySound(2);
         m2 = gameObject.AddComponent<BoxCollider2D>();
         m2.isTrigger = true;
         m2.transform.Translate(Vector3.up * .00001f);

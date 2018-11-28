@@ -21,6 +21,7 @@ public class WarriorSpaceAbility : Ability
         forwardSpeed = 3.3f;
         player = GetComponent<Player>();
         rb2D = player.GetComponent<Rigidbody2D>();
+        audio = GetComponentInChildren<AudioSync>();
     }
 
     void Update()
@@ -33,16 +34,18 @@ public class WarriorSpaceAbility : Ability
 
     protected override void GetInput()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !onCoolDown)
+        if (Input.GetKeyDown(KeyCode.Space) && !onCoolDown && !player.isStun && !player.usingAbility)
         {
             StartCoroutine("CoolDown");
             CmdSendAnimationParameter(true);
+            player.usingAbility = true;
         }
-
     }
 
     protected void WarriorSpaceDisableMovement()
     {
+        if(isLocalPlayer)
+            audio.PlaySound(4);
         player.CmdSendAnimationParameter(1);
         rb2D.velocity = Vector3.zero;
         player.canMove = false;
@@ -52,6 +55,7 @@ public class WarriorSpaceAbility : Ability
     protected void WarriorSpaceEnableMovement()
     {
         player.canMove = true;
+        player.usingAbility = false;
     }
     // Deals damage at collision contact point and creates approriate damage text
 
@@ -81,7 +85,7 @@ public class WarriorSpaceAbility : Ability
     {
         if (!isLocalPlayer)
             return;
-
+        audio.PlaySound(5);
         space = gameObject.AddComponent<PolygonCollider2D>();
         space.isTrigger = true;
         space.transform.Translate(Vector3.up * .00001f);

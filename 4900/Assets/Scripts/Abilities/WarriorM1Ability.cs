@@ -14,7 +14,7 @@ public class WarriorM1Ability : Ability{
         this.damage = 5;
         player = GetComponent<Player>();
         anim = GetComponent<Animator>();
-
+        audio = GetComponent<AudioSync>();
     }
 
     void Update()
@@ -54,7 +54,7 @@ public class WarriorM1Ability : Ability{
     {
         if (!isLocalPlayer)
             return;
-
+        audio.PlaySound(Random.Range(0, 2));
         m1 = gameObject.AddComponent<PolygonCollider2D>();
         m1.isTrigger = true;
         m1.transform.Translate(Vector3.up * .00001f);
@@ -75,7 +75,7 @@ public class WarriorM1Ability : Ability{
         {
             CmdSendAnimationParameter(true);
         }
-        else
+        else 
             CmdSendAnimationParameter(false);
     }
 

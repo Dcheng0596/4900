@@ -9,34 +9,43 @@ public class Player : NetworkBehaviour
     Animator anim;
     public AudioClip background;
     private Rigidbody2D rb2D;
+    AudioListener listener;
 
     public int speed;
     public int currentSpeed;
-
+    
     public float smoothSpeed;
 
     public bool canMove;
+    public bool isStun;
+    public bool usingAbility;
 
     void Start()
     {
         canMove = true;
+        isStun = false;
+        usingAbility = false;
         currentSpeed = speed;
-
+        
         anim = gameObject.GetComponent<Animator>();
 
-
+        CmdSendAnimationParameter(1);
         rb2D = GetComponent<Rigidbody2D>();
 
         if (!isLocalPlayer)
-            rb2D.bodyType = RigidbodyType2D.Kinematic;
+            rb2D.bodyType = RigidbodyType2D.Kinematic;   
+        if(isLocalPlayer)
+            listener = gameObject.AddComponent<AudioListener>();
+
     }
 
     void FixedUpdate()
     {
         if (!isLocalPlayer)
             return;
-        if (!canMove)
+        if (!canMove || isStun)
             return;
+
         playerMovement();
 
         Rect screenRect = new Rect(0, 0, Screen.width, Screen.height);

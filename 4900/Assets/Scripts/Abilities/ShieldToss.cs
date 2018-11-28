@@ -27,8 +27,7 @@ public class ShieldToss : NetworkBehaviour {
         rb2D = GetComponent<Rigidbody2D>();
         dEvent = GetComponent<OnDamage>();
         stun = GetComponent<Stun>();
-        if(isServer)
-            RpcRecieveThrow();
+        StartCoroutine("Throw");
     }
 
     void LateUpdate()
@@ -37,11 +36,6 @@ public class ShieldToss : NetworkBehaviour {
             CmdDestroyShield();
     }
 
-    [ClientRpc]
-    void RpcRecieveThrow()
-    {
-        StartCoroutine("Throw");
-    }
 
     [Command]
     void CmdDestroyShield()

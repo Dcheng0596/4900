@@ -17,14 +17,17 @@ public class Stun : NetworkBehaviour {
     }
     IEnumerator StunCoroutine(float stunTime)
     {
-        anim.SetInteger("LowerState", 1);
-        anim.SetBool("Stunned", true);
+        CmdSendAnimationParameter(true);
         rb2D.velocity = Vector3.zero;
-        player.enabled = false;
-
+        player.canMove = false;
+        player.isStun = true;
         yield return new WaitForSeconds(stunTime);
-        this.GetComponent<Player>().enabled = true;
-        anim.SetBool("Stunned", false);
+        rb2D.velocity = Vector3.zero;
+        CmdSendAnimationParameter(false);
+        player.canMove = true;
+        player.isStun = false;
+        player.usingAbility = false;
+        player.currentSpeed = player.speed;
     }
 
     [ClientRpc]
@@ -39,5 +42,23 @@ public class Stun : NetworkBehaviour {
     {
         GameObject go = GameObject.Find(uniqueID);
         go.GetComponent<Stun>().RpcRecieveStunCoroutine(stunTime);
+    }
+
+    [Command]
+    void CmdSendAnimationParameter(bool state)
+    {
+        RpcRecieveAnimationParameter(state);
+    }
+
+    [ClientRpc]
+    void RpcRecieveAnimationParameter(bool state)
+    {
+        if (state)
+        {
+            anim.SetBool("Stunned", true);
+            anim.SetInteger("LowerState", 1);
+        }
+        else
+            anim.SetBool("Stunned", false);
     }
 }

@@ -94,10 +94,12 @@ public class PlayerHealth : NetworkBehaviour
         isDead = true;
 
         CmdDisableCollider();
+        rb2D.velocity = Vector3.zero;
         player.enabled = false;
+
         CmdSendDeathAnimationParameter(true);
         //Disable Lower layer 
-        anim.SetLayerWeight(anim.GetLayerIndex("Lower"), 0);
+
     }
 
     void SetHealthSliderPosition()
@@ -119,6 +121,8 @@ public class PlayerHealth : NetworkBehaviour
             anim.SetBool("Dead", true);
         else
             anim.SetBool("Death", false);
+
+        anim.SetLayerWeight(anim.GetLayerIndex("Lower"), 0);
     }
 
 }

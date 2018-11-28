@@ -20,6 +20,7 @@ public class WarriorQAbility : Ability {
         this.damage = 12;
         this.onCoolDown = false;
         player = GetComponent<Player>();
+        audio = GetComponent<AudioSync>();
     }
 	
 	void Update()
@@ -31,10 +32,11 @@ public class WarriorQAbility : Ability {
 
     protected override void GetInput()
     {
-        if (Input.GetKeyDown(KeyCode.Q) && !onCoolDown)
+        if (Input.GetKeyDown(KeyCode.Q) && !onCoolDown && !player.isStun && !player.usingAbility)
         {
             StartCoroutine("CoolDown");
-            CmdSendAnimationParameter(true);         
+            CmdSendAnimationParameter(true);
+            player.usingAbility = true;
         }
 
     }
@@ -49,6 +51,7 @@ public class WarriorQAbility : Ability {
     protected void WarriorQSlowDown()
     {
         this.SlowDown();
+        player.usingAbility = false;
     }
 
     protected void WarriorQUndoSlow()
@@ -57,7 +60,8 @@ public class WarriorQAbility : Ability {
     }
 
     void SendShield()
-    {
+    {   if(isLocalPlayer)
+            audio.PlaySound(3);
         CmdSendAnimationParameter(false);
         if (!isServer)
             return;
