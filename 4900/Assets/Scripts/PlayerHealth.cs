@@ -11,6 +11,7 @@ public class PlayerHealth : NetworkBehaviour
     [SyncVar]
     public int currentHealth;
     private Slider healthSlider;
+    private DamageFlash flash;
 
     private Rigidbody2D rb2D;
 
@@ -26,6 +27,7 @@ public class PlayerHealth : NetworkBehaviour
         anim = GetComponent<Animator>();
         player = GetComponent<Player>();
         healthSlider = GetComponentInChildren<Slider>();
+        flash = GetComponent<DamageFlash>();
         rb2D = GetComponent<Rigidbody2D>();
 
         currentHealth = startingHealth;
@@ -58,9 +60,10 @@ public class PlayerHealth : NetworkBehaviour
     public void TakeDamage(int amount)
     {
         isDamaged = true;
-
         if (!isServer)
             return;
+        Color color = new Color(1f, .6f, .6f);
+        flash.CmdSendDamageFlash(color);
         currentHealth -= amount;
         healthSlider.value = currentHealth;
 

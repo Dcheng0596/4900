@@ -69,6 +69,7 @@ GameObject:
   - component: {fileID: 114617081145385356}
   - component: {fileID: 114439193411231112}
   - component: {fileID: 114157134127745930}
+  - component: {fileID: 114852447564661360}
   - component: {fileID: 114933043999524110}
   - component: {fileID: 82186479736761580}
   m_Layer: 8
@@ -1015,6 +1016,8 @@ MonoBehaviour:
   currentSpeed: 80
   smoothSpeed: 0.18
   canMove: 0
+  isStun: 0
+  usingAbility: 0
 --- !u!114 &114148525745409354
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1230,6 +1233,17 @@ MonoBehaviour:
   slowDown: 10
   damage: 5
   coolDown: 0
+--- !u!114 &114852447564661360
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1025915892709512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c71fbf9958fa36f4e92ef55512756c2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114905118432661046
 MonoBehaviour:
   m_ObjectHideFlags: 1
