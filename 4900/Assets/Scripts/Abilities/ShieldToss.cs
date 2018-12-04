@@ -47,11 +47,11 @@ public class ShieldToss : NetworkBehaviour {
     {
         
         rb2D.velocity = transform.up * speed;
-        yield return new WaitForSeconds(.2f);
+        yield return new WaitForSeconds(.18f);
         apex = true;
         yield return new WaitForSeconds(.03f);
         apex = false;
-        yield return new WaitForSeconds(.20f);
+        yield return new WaitForSeconds(.18f);
         CmdDestroyShield();
     }
 
