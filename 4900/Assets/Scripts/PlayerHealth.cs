@@ -33,12 +33,26 @@ public class PlayerHealth : NetworkBehaviour
         currentHealth = startingHealth;
         healthSlider.value = startingHealth;
 
+        SetUIHealthBar();
+
         if (isLocalPlayer)
         {
             Image fill = healthSlider.transform.GetChild(1).GetComponentInChildren<Image>();
             fill.color = new Color32(0, 230, 0, 255);
         }
 
+    }
+
+    void SetUIHealthBar()
+    {
+        if(isLocalPlayer)
+        {
+            GameObject UI = GameObject.Find("UI");
+
+            HealthBar UIhealthBar = UI.GetComponentInChildren<HealthBar>();
+
+            UIhealthBar.health = this.GetComponent<PlayerHealth>();
+        }
     }
 
     void Update()
