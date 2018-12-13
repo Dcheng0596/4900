@@ -36,6 +36,7 @@ public class Player : NetworkBehaviour
             rb2D.bodyType = RigidbodyType2D.Kinematic;   
         if(isLocalPlayer)
             listener = gameObject.AddComponent<AudioListener>();
+        StartCoroutine("Wait");
 
     }
 
@@ -54,13 +55,20 @@ public class Player : NetworkBehaviour
     
         SetLowerState();
     }
-  
+
+    IEnumerator Wait()
+    {
+        isStun = true;
+        yield return new WaitForSeconds(4);
+        isStun = false;
+    }
 
     public override void OnStartLocalPlayer()
     {
         setCamera();
-    }
 
+    }
+   
     // Assign a camera to the local player then disable the rest
     void setCamera()
     {

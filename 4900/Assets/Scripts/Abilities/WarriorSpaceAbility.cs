@@ -105,9 +105,16 @@ public class WarriorSpaceAbility : Ability
 
     IEnumerator CoolDown()
     {
-        onCoolDown = true;
-        yield return new WaitForSeconds(coolDown);
+        Text cooldownText = GameObject.Find("SpaceText").GetComponent<Text>();
+
+        for (int i = coolDown; i > 0; i--)
+        {
+            cooldownText.text = i.ToString();
+            onCoolDown = true;
+            yield return new WaitForSeconds(1);
+        }
         onCoolDown = false;
+        cooldownText.text = null;
     }
 
     [Command]

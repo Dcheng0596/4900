@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
+// Player flashes a color when hit
 public class DamageFlash : NetworkBehaviour {
 
     Player player;

@@ -14,12 +14,14 @@ public class PlayerHealth : NetworkBehaviour
     private DamageFlash flash;
 
     private Rigidbody2D rb2D;
+    private Text gameOverText;
 
     Animator anim;
 
     Player player;
     bool isDead;
     bool isDamaged;
+    bool isGameOver;
 
 
     void Start()
@@ -33,6 +35,8 @@ public class PlayerHealth : NetworkBehaviour
         currentHealth = startingHealth;
         healthSlider.value = startingHealth;
 
+        isGameOver = false;
+
         SetUIHealthBar();
 
         if (isLocalPlayer)
@@ -45,7 +49,7 @@ public class PlayerHealth : NetworkBehaviour
 
     void SetUIHealthBar()
     {
-        if(isLocalPlayer)
+        if (isLocalPlayer)
         {
             GameObject UI = GameObject.Find("UI");
 
@@ -59,14 +63,15 @@ public class PlayerHealth : NetworkBehaviour
     {
         SetHealthSliderPosition();
 
+        if (currentHealth <= 0 && !isGameOver)
+        {
+            Death();
+            isGameOver = true;
+        }
+
         if (!isLocalPlayer)
             return;
         CmdSendSlider(currentHealth);
-
-        if (currentHealth <= 0)
-        {
-            Death();
-        }
 
         isDamaged = false;
     }
@@ -86,7 +91,8 @@ public class PlayerHealth : NetworkBehaviour
     [ClientRpc]
     void RpcSetSlider(int health)
     {
-        healthSlider.value = health;
+        if (healthSlider != null)
+            healthSlider.value = health;
     }
 
     [Command]
@@ -108,17 +114,53 @@ public class PlayerHealth : NetworkBehaviour
     }
     void Death()
     {
-        isDead = true;
+        if (isLocalPlayer)
+        {
+            isDead = true;
 
-        CmdDisableCollider();
-        rb2D.velocity = Vector3.zero;
-        player.enabled = false;
+            CmdDisableCollider();
+            rb2D.velocity = Vector3.zero;
+            player.enabled = false;
 
-        CmdSendDeathAnimationParameter(true);
-        //Disable Lower layer 
+            CmdSendDeathAnimationParameter(true);
+        }
+        StartCoroutine("GameOverText");
+
 
     }
 
+    IEnumerator GameOverText()
+    {
+        GameObject lobbyManager = GameObject.Find("LobbyManager");
+        NetworkLobbyManager lobby = lobbyManager.GetComponent<NetworkLobbyManager>();
+
+        GameObject ScreenText = GameObject.Find("ScreenText");
+        Text gameOverText = ScreenText.GetComponent<Text>();
+
+        if (isLocalPlayer)
+        {
+            Debug.Log("Death");
+            yield return new WaitForSeconds(2);
+            gameOverText.text = "YOU LOSE";
+            yield return new WaitForSeconds(4);
+            ScreenText.GetComponent<RectTransform>().localScale = new Vector2(5, 5);
+            gameOverText.text = "Exiting Lobby ...";
+            yield return new WaitForSeconds(2);
+        }
+        else
+        {
+            yield return new WaitForSeconds(2);
+            gameOverText.text = "YOU WIN";
+            yield return new WaitForSeconds(4);
+            ScreenText.GetComponent<RectTransform>().localScale = new Vector2(5, 5);
+            gameOverText.text = "Exiting Lobby ...";
+            yield return new WaitForSeconds(2);
+        }
+    
+        lobby.ServerReturnToLobby();
+        
+        
+    }
     void SetHealthSliderPosition()
     {
         healthSlider.transform.position = transform.position + new Vector3(0, 0.65f, 0);

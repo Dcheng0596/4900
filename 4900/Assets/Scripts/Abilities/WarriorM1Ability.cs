@@ -71,7 +71,7 @@ public class WarriorM1Ability : Ability{
 
     protected override void GetInput()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && !player.isStun)
         {
             CmdSendAnimationParameter(true);
         }
