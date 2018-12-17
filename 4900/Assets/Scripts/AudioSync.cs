@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
+// Plays an audio clip over the network based on the ID
 public class AudioSync : NetworkBehaviour {
 
     AudioSource source;

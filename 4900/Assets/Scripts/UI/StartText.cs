@@ -8,14 +8,12 @@ public class StartText : MonoBehaviour {
 
     Text startText;
 
-    // Use this for initialization
     void Start ()
     {
         startText = GetComponent<Text>();
         StartCoroutine("ShowText");
 	}
 	
-	// Update is called once per frame
 	void Update ()
     {
 		

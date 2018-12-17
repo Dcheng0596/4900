@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
-// Applies the correct effects correspodning to the trigger
+// Applies damage to a player and displays the corresponding damage text
 public class OnDamage: NetworkBehaviour {
 
     public GameObject dText;

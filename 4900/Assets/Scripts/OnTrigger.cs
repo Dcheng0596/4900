@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
-// Applies the correct effects correspodning to the trigger
+// When a collision is detected the correct ability will be carried out 
+// based on the ability value by the ability class that is active
 public class OnTrigger : NetworkBehaviour {
 
     public enum Ability { M1, M2, Q, Space};

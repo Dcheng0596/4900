@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-// Applies fade out effect to the Text
+// Applies a fade out effect to text
 public class Fade : MonoBehaviour {
 
     Text text;

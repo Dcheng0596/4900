@@ -7,13 +7,12 @@ using UnityEngine.UI;
 public class Timer : MonoBehaviour {
 
     Text timeSinceStart;
-	// Use this for initialization
+
 	void Start ()
     {
         timeSinceStart = GetComponent<Text>();
 	}
 	
-	// Update is called once per frame
 	void Update ()
     {
         UpdateTimer();

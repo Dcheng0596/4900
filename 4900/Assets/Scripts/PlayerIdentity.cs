@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
+// Gives each player in the scene a unique identifier
 public class PlayerIdentity : NetworkBehaviour {
 
     [SyncVar] private string playerUniqueIdentity;
@@ -15,13 +16,11 @@ public class PlayerIdentity : NetworkBehaviour {
         SetIdentity();
     }
 
-    // Use this for initialization
     void Awake ()
     {
         myTransform = transform;
 	}
 	
-	// Update is called once per frame
 	void Update ()
     {
         if (myTransform.name == "" || myTransform.name == "Player GO(Clone)")

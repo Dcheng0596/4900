@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
+// Applies the stun status condition to a player
+// While stunned a player can not perform any actions
 public class Stun : NetworkBehaviour {
 
     Animator anim;

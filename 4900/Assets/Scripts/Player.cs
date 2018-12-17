@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-// Handles player movement and rotation
+// Handles player setup, movement, and rotation
 public class Player : NetworkBehaviour
 {
     Animator anim;
